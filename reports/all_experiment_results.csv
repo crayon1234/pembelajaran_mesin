@@ -1,0 +1,8 @@
+model,accuracy,precision_macro,recall_macro,f1_macro,balanced_accuracy,roc_auc,cv_f1_mean,cv_f1_std
+KNN (Baseline),0.854,0.8583,0.8329,0.8417,0.8329,0.8872,0.8666,0.0147
+Naive Bayes (Baseline),0.8485,0.8454,0.8334,0.8383,0.8334,0.8968,0.855,0.0133
+SVM (Baseline),0.9091,0.9164,0.8932,0.9021,0.8932,0.9521,0.9127,0.014
+KNN (Optimized),0.8733,0.8874,0.8487,0.861,0.8487,0.9371,0.8894,0.012
+Naive Bayes (Optimized),0.8485,0.8454,0.8334,0.8383,0.8334,0.8968,0.855,0.0133
+SVM (Optimized),0.9091,0.9164,0.8932,0.9021,0.8932,0.9521,0.9127,0.014
+SVM (FeatureSelection),0.8981,0.8993,0.8855,0.8912,0.8855,0.9373,N/A,N/A

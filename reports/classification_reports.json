@@ -1,0 +1,12 @@
+{
+  "baseline": {
+    "KNN (Baseline)": "              precision    recall  f1-score   support\n\n     Dropout       0.87      0.74      0.80       284\n    Graduate       0.85      0.93      0.89       442\n\n    accuracy                           0.85       726\n   macro avg       0.86      0.83      0.84       726\nweighted avg       0.86      0.85      0.85       726\n",
+    "Naive Bayes (Baseline)": "              precision    recall  f1-score   support\n\n     Dropout       0.83      0.76      0.80       284\n    Graduate       0.86      0.90      0.88       442\n\n    accuracy                           0.85       726\n   macro avg       0.85      0.83      0.84       726\nweighted avg       0.85      0.85      0.85       726\n",
+    "SVM (Baseline)": "              precision    recall  f1-score   support\n\n     Dropout       0.94      0.82      0.88       284\n    Graduate       0.89      0.97      0.93       442\n\n    accuracy                           0.91       726\n   macro avg       0.92      0.89      0.90       726\nweighted avg       0.91      0.91      0.91       726\n"
+  },
+  "optimized": {
+    "KNN (Optimized)": "              precision    recall  f1-score   support\n\n     Dropout       0.92      0.74      0.82       284\n    Graduate       0.85      0.96      0.90       442\n\n    accuracy                           0.87       726\n   macro avg       0.89      0.85      0.86       726\nweighted avg       0.88      0.87      0.87       726\n",
+    "Naive Bayes (Optimized)": "              precision    recall  f1-score   support\n\n     Dropout       0.83      0.76      0.80       284\n    Graduate       0.86      0.90      0.88       442\n\n    accuracy                           0.85       726\n   macro avg       0.85      0.83      0.84       726\nweighted avg       0.85      0.85      0.85       726\n",
+    "SVM (Optimized)": "              precision    recall  f1-score   support\n\n     Dropout       0.94      0.82      0.88       284\n    Graduate       0.89      0.97      0.93       442\n\n    accuracy                           0.91       726\n   macro avg       0.92      0.89      0.90       726\nweighted avg       0.91      0.91      0.91       726\n"
+  }
+}
