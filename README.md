@@ -3,7 +3,8 @@
 **Mata Kuliah:** Pembelajaran Mesin  
 **Dosen:** Junta Zeniarja, M.Kom  
 **Universitas:** Universitas Dian Nuswantoro  
-**Semester:** Genap 2025/2026
+**Semester:** Genap 2025/2026  
+**Repository:** https://github.com/crayon1234/pembelajaran_mesin
 
 ---
 
@@ -141,6 +142,12 @@ python src/predict.py --batch data/data.csv --output reports/batch_predictions.c
 ## Random Seed
 
 Semua eksperimen menggunakan `RANDOM_SEED = 42` untuk reproducibility.
+
+---
+
+## Link Repository
+
+https://github.com/crayon1234/pembelajaran_mesin
 
 ---
 
