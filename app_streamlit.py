@@ -234,9 +234,20 @@ elif page == "🔮 Prediksi Kelulusan":
             submitted = st.form_submit_button("🔮 Prediksi Sekarang", use_container_width=True)
 
         if submitted:
-            # Build input dict — strip whitespace/tab from feature names for safe lookup
-            feature_names_clean = [f.strip() for f in feature_names]
-            input_dict = {f: 0.0 for f in feature_names_clean}
+            # Load median values dari data asli sebagai default realistis
+            import pandas as _pd
+            try:
+                df_ref = load_data(DATA_PATH)
+                df_ref = df_ref[df_ref['Target'].isin(['Graduate','Dropout'])]
+                df_ref.columns = [c.strip().replace('\t','') for c in df_ref.columns]
+                feature_names_clean = [f.strip() for f in feature_names]
+                medians = df_ref[feature_names_clean].median().to_dict()
+            except Exception:
+                medians = {}
+                feature_names_clean = [f.strip() for f in feature_names]
+
+            # Mulai dari median, lalu override dengan input user
+            input_dict = {f: medians.get(f, 0.0) for f in feature_names_clean}
             input_dict.update({
                 'Curricular units 1st sem (enrolled)': cu1_enrolled,
                 'Curricular units 1st sem (approved)': cu1_approved,
@@ -255,15 +266,24 @@ elif page == "🔮 Prediksi Kelulusan":
             })
 
             try:
-                model   = bundle['model']
-                scaler  = bundle['scaler']
-                x       = np.array([input_dict.get(f.strip(), 0.0) for f in feature_names]).reshape(1, -1)
-                x_sc    = scaler.transform(x)
-                pred    = model.predict(x_sc)[0]
-                prob    = model.predict_proba(x_sc)[0]
-                label   = 'Graduate' if pred == 1 else 'Dropout'
-                p_grad  = float(prob[1])
-                p_drop  = float(prob[0])
+                pipeline = bundle.get('pipeline')
+                model    = bundle.get('model')
+                scaler   = bundle.get('scaler')
+                x_df = _pd.DataFrame([input_dict], columns=feature_names_clean)
+
+                if pipeline is not None:
+                    # Bundle baru: pakai Pipeline langsung
+                    pred = pipeline.predict(x_df)[0]
+                    prob = pipeline.predict_proba(x_df)[0]
+                else:
+                    # Bundle lama: pakai scaler + model terpisah
+                    x_sc = scaler.transform(x_df)
+                    pred = model.predict(x_sc)[0]
+                    prob = model.predict_proba(x_sc)[0]
+
+                label  = 'Graduate' if pred == 1 else 'Dropout'
+                p_grad = float(prob[1])
+                p_drop = float(prob[0])
             except Exception as e:
                 st.error(f"❌ Error saat prediksi: {e}")
                 st.stop()

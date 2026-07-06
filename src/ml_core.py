@@ -71,10 +71,14 @@ def preprocess(df, target_col='Target', test_size=0.2, random_state=RANDOM_SEED)
     smote = SMOTE(random_state=random_state)
     X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
 
-    # Scaling
+    # Scaling — fit dengan DataFrame agar feature names tersimpan dengan benar
+    import pandas as _pd
+    X_train_res_df = _pd.DataFrame(X_train_res, columns=feature_names)
+    X_test_df      = _pd.DataFrame(X_test.values, columns=feature_names)
+
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train_res)
-    X_test_scaled  = scaler.transform(X_test)
+    X_train_scaled = scaler.fit_transform(X_train_res_df)
+    X_test_scaled  = scaler.transform(X_test_df)
 
     return X_train_scaled, X_test_scaled, y_train_res, y_test, scaler, feature_names, X_train, X_test
 
