@@ -58,13 +58,15 @@ UAS_ML_Kelulusan/
 
 ### 1. Install Dependencies
 
-```bash
+```
 python -m pip install -r requirements.txt
 ```
 
 ### 2. Training Pipeline (hasilkan model + laporan)
 
-```bash
+> Model sudah tersedia di folder `models/`. Langkah ini hanya perlu dijalankan ulang jika model dihapus atau ingin melatih ulang dari awal.
+
+```
 python src/train.py
 ```
 
@@ -72,15 +74,15 @@ Output: model tersimpan di `models/`, laporan di `reports/`
 
 ### 3. Aplikasi Web Streamlit
 
-```bash
-streamlit run app_streamlit.py
+```
+python -m streamlit run app_streamlit.py
 ```
 
 Buka browser: http://localhost:8501
 
 ### 4. Aplikasi Web Gradio
 
-```bash
+```
 python app_gradio.py
 ```
 
@@ -88,13 +90,21 @@ Buka browser: http://localhost:7860
 
 ### 5. Jalankan Notebook (Eksperimen Lengkap)
 
-```bash
-jupyter lab notebook/uas_ml_graduation_knn_nb_svm_optimization.ipynb
 ```
+jupyter notebook notebook/uas_ml_graduation_knn_nb_svm_optimization.ipynb
+```
+
+atau pakai JupyterLab:
+
+```
+jupyter lab
+```
+
+Lalu buka file `notebook/uas_ml_graduation_knn_nb_svm_optimization.ipynb` dari browser.
 
 ### 6. Prediksi Batch
 
-```bash
+```
 python src/predict.py --batch data/data.csv --output reports/batch_predictions.csv
 ```
 

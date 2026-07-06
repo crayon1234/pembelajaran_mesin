@@ -54,10 +54,12 @@ st.markdown("""
     .result-graduate {
         background: #d4edda; border-left: 5px solid #28a745;
         padding: 15px; border-radius: 8px; font-size: 1.1rem;
+        color: #1a1a1a;
     }
     .result-dropout {
         background: #f8d7da; border-left: 5px solid #dc3545;
         padding: 15px; border-radius: 8px; font-size: 1.1rem;
+        color: #1a1a1a;
     }
     .disclaimer {
         background: #fff3cd; border-left: 4px solid #ffc107;
@@ -232,8 +234,9 @@ elif page == "🔮 Prediksi Kelulusan":
             submitted = st.form_submit_button("🔮 Prediksi Sekarang", use_container_width=True)
 
         if submitted:
-            # Build input dict
-            input_dict = {f: 0.0 for f in feature_names}
+            # Build input dict — strip whitespace/tab from feature names for safe lookup
+            feature_names_clean = [f.strip() for f in feature_names]
+            input_dict = {f: 0.0 for f in feature_names_clean}
             input_dict.update({
                 'Curricular units 1st sem (enrolled)': cu1_enrolled,
                 'Curricular units 1st sem (approved)': cu1_approved,
@@ -251,15 +254,19 @@ elif page == "🔮 Prediksi Kelulusan":
                 'Gender': gender,
             })
 
-            model   = bundle['model']
-            scaler  = bundle['scaler']
-            x       = np.array([input_dict.get(f, 0.0) for f in feature_names]).reshape(1, -1)
-            x_sc    = scaler.transform(x)
-            pred    = model.predict(x_sc)[0]
-            prob    = model.predict_proba(x_sc)[0]
-            label   = 'Graduate' if pred == 1 else 'Dropout'
-            p_grad  = float(prob[1])
-            p_drop  = float(prob[0])
+            try:
+                model   = bundle['model']
+                scaler  = bundle['scaler']
+                x       = np.array([input_dict.get(f.strip(), 0.0) for f in feature_names]).reshape(1, -1)
+                x_sc    = scaler.transform(x)
+                pred    = model.predict(x_sc)[0]
+                prob    = model.predict_proba(x_sc)[0]
+                label   = 'Graduate' if pred == 1 else 'Dropout'
+                p_grad  = float(prob[1])
+                p_drop  = float(prob[0])
+            except Exception as e:
+                st.error(f"❌ Error saat prediksi: {e}")
+                st.stop()
 
             st.markdown("---")
             st.markdown("### Hasil Prediksi")
